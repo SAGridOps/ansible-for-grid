@@ -1,0 +1,26 @@
+- name: Install prerequisite packages
+  action: yum name={{ item }} state=present
+  #sudo: true
+  with_items: 
+    - python-simplejson
+    - libselinux-python
+    - iptables
+    - iptraf
+    - bind-utils
+    - mlocate
+    - initscripts
+    - chkconfig
+    - system-config-services
+    - openssh-clients
+  tags:
+    - bootstrap
+- name: Install some useful packages
+  action: yum name={{ item }} state=present
+  with_items:
+    - htop
+    - iptraf
+    - emacs
+    - vim
+    - facter
+  tags:
+    - bootstrap
