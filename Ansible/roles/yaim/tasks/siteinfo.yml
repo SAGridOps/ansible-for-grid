@@ -20,6 +20,7 @@
   action: copy src=opt/glite/yaim/etc/siteinfo/wn-list.conf.{{ site_name }} dest=/opt/glite/yaim/etc/{{site_name}}/siteinfo/wn-list.conf owner=root group=root mode=0644
   sudo: true
   sudo_user: root
+  when: emi_service == 'CREAM_CE'
   notify:
     - run yaim
   tags: 
@@ -129,7 +130,7 @@
     - lfc    
 
 - name: Create site-info.def file
-  action: template src=opt/glite/yaim/etc/siteinfo/site-info.def.j2 dest=/opt/glite/yaim/etc/{{site_name}}/siteinfo/site-info.def owner=root group=root mode=0600
+  action: template src=opt/glite/yaim/etc/siteinfo/site-info.def.j2 dest=/opt/glite/yaim/etc/{{ site_name }}/siteinfo/site-info.def owner=root group=root mode=0600
   sudo: true
   sudo_user: root
   notify:
@@ -143,3 +144,5 @@
   sudo_user: root
   tags:
     - yaim
+
+  

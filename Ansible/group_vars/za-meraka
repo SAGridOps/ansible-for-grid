@@ -1,6 +1,10 @@
 ---
+yaim_path: /opt/glite/yaim
 bdii_port: 2170
 vo_sw_dir: /opt/exp_soft
+cvmfs_repos:
+  - sagrid.
+  - atlas
 vos:
   - dteam
   - ops
@@ -32,18 +36,24 @@ site_website: "http://www.csir.co.za/meraka"
 site_domain: c4.csir.co.za
 
 # passwords
-mysql_pass: 'P@55W0rd'
-mysql_admin_pass: 'Aey3F5lQLqtOWTop10o9skDfvbCrAlwW'
-apel_db_password: 
+mysql_pass: '##'
+mysql_admin_pass: '##'
+apel_db_password: '##'
 
 # services at the site
 bdii_host: top-bdii.c4.csir.co.za
 apel_mysql_host: ce01-node001.c4.csir.co.za
 px_host: myproxy.cern.ch
-wms_host: wms.hellasgrid.gr
-argus_status: no
+#wms_host: wms.hellasgrid.gr
+# check GOCDB for relevant services in the AfricaArabia https://goc.egi.eu/portal/index.php?Page_Type=Service_Group&id=926
+wms_host: wms.c4.csir.co.za 
+argus_status: yes
+argus_host: argus.c4.csir.co.za
+pap_admin_dn: "'/C=IT/O=INFN/OU=Personal Certificate/L=ZA-MERAKA/CN=Bruce Becker'"
+
 # TODO - new LFC has to be deployed here at Meraka | BB 10/13
-lfc_host: devslngrd002.uct.ac.za
+#lfc_host: devslngrd002.uct.ac.za
+lfc_host:
 
 ce_host: ce01-node001.c4.csir.co.za
 # Replace the following specs with your own
@@ -96,6 +106,8 @@ bdii_regions:
 #  endpoint: ldap://myproxy01.localdomain:2170/mds-vo-name=resource,o=grid
 - name: FTS
   endpoint: ldap://fts.c4.csir.co.za:2170/mds-vo-name=resource,o=grid
+- name: ARGUS
+  endpoint: ldap://argus.c4.csir.co.za:2170/mds-vo-name=resource,o=grid
 
 se_list:
   - se01.localdomain

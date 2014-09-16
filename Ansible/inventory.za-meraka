@@ -19,9 +19,9 @@ security.sanren.ac.za
 # we should put the dns servers in here when we need to move
 # hosts in and out of DNS
 
-[UI]
-ui-dev.c4.csir.co.za
-ui-stage.sagrid.ac.za
+[UIs]
+ui-dev.c4.csir.co.za needs_certificate='false' emi_service='UI' yaim_options='-n UI'
+ui-stage.sagrid.ac.za needs_certificate='false' emi_service='UI' yaim_options='-n UI'
 #################
 # core services #
 #################
@@ -33,31 +33,35 @@ myproxy.c4.csir.co.za
 
 # BDIIs
 [top-bdiis]
-top-bdii.c4.csir.co.za emi_service='BDII_top' yaim_options='-n BDII_top'
+top-bdii.c4.csir.co.za needs_certificate='false' emi_service='BDII_top' yaim_options='-n BDII_top'
 
 # WMS 
 [wms-servers]
-wms.c4.csir.co.za emi_service='WMS' yaim_options='-n WMS -n LB'
+wms.c4.csir.co.za needs_certificate='true' emi_service='WMS' yaim_options='-n WMS -n LB'
 
 # LFC
 [lfcs]
-lfc.c4.csir.co.za emi_service='lfc' yaim_options='-n lfc_mysql'
+lfc.c4.csir.co.za needs_certificate='true' emi_service='lfc' yaim_options='-n lfc_mysql'
 
 # FTS
 [fts]
-fts.c4.csir.co.za emi_service='fts-3'
+fts.c4.csir.co.za needs_certificate='true' emi_service='fts-3'
 
 # DIRAC
 [dirac]
-dirac.c4.csir.co.za
+dirac.c4.csir.co.za needs_certificate='true'
 
 # APEL
 [apel-servers]
-apel-server.c4.csir.co.za
+apel-server.c4.csir.co.za needs_certificate='true'
+
+# ARGUS
+[argus-servers]
+argus.c4.csir.co.za emi_service='ARGUS' yaim_options='-n ARGUS_server' needs_certificate='true'
 
 # NAGIOS
 [ngi-nagios]
-nagios.c4.csir.co.za  emi_service='SAM-NAGIOS' yaim_options='-n NAGIOS -n SAM_NAGIOS'
+nagios.c4.csir.co.za   emi_service='SAM-NAGIOS' yaim_options='-n NAGIOS -n SAM_NAGIOS' needs_certificate='true'
 [vo-sagrid-nagios]
 sagrid-monitoring.c4.csir.co.za
 
@@ -67,11 +71,11 @@ sagrid-monitoring.c4.csir.co.za
 
 # Site BDII
 [site-bdiis]
-site-bdii.c4.csir.co.za emi_service='BDII_site' yaim_options='-n BDII_site'
+site-bdii.c4.csir.co.za needs_certificate='false' emi_service='BDII_site' yaim_options='-n BDII_site'
 
 # CREAM CE's
 [cream-ces]
-ce01-node001.c4.csir.co.za emi_service='CREAM_CE' yaim_options='-n MPI_CE -n creamCE -n TORQUE_server -n TORQUE_utils'
+ce01-node001.c4.csir.co.za needs_certificate='true' emi_service='CREAM_CE' yaim_options='-n MPI_CE -n creamCE -n TORQUE_server -n TORQUE_utils'
 
 [apel-publishers:children]
 cream-ces
@@ -92,6 +96,7 @@ top-bdiis
 wms-servers
 ngi-nagios
 fts
+argus-servers
 
 [site-services:children]
 site-bdiis
@@ -131,6 +136,8 @@ top-bdiis
 wms-servers
 ngi-nagios
 fts
+UIs
+argus-servers
 
 [nagios-servers:children]
 ngi-nagios
