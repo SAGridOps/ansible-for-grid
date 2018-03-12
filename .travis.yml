@@ -1,10 +1,28 @@
 language: bash
-
+sudo: required
+services: docker
+# The bootstrap role will always be tested
+# Add the containers you need for the services you want to test here
+env:
+  - INVENTORY=inventory.travis BOOTSTRAP_CONTAINER="aaroc/code-rade-sl6-ansible" SITE_BDII_CONTAINER="aaroc/site-bdii:centos6.8"
+  - INVENTORY=inventory.travis BOOTSTRAP_CONTAINER="aaroc/code-rade-u1404-ansible" SITE_BDII_CONTAINER="aaroc/site-bdii:centos6.8"
 before_install:
-  - git clone https://github.com/ansible/ansible.git
-  - sudo apt-get install python26
-  - cd ansible/ansible
-  - sudo python setup.py install
+# Pull the containers you need for the tests
+  - docker pull ${BOOTSTRAP_CONTAINER}
+  - docker pull ${SITE_BDII_CONTAINER}
+# basic connectivity test
+# Test Bootstrap role
+# Test Site-BDII playbook
 
 install:
-  - ansible_playbook -i inventor.za-meraka.dev -C wms.yml
+  - cd $TRAVIS_BUILD_DIR/Ansible
+  - chmod 400 $PWD/roles/bootstrap/files/public_keys/*
+  - docker run -h localhost.dev -v $PWD:$PWD -w $PWD $BOOTSTRAP_CONTAINER ansible all -c local -vvvvv -i inventories/$INVENTORY -m ping
+#  - docker run -h localhost.dev -v $PWD:$PWD -w $PWD $BOOTSTRAP_CONTAINER ansible-playbook -c local -i inventories/$INVENTORY bootstrap.yml
+#  - docker run -h localhost.dev -v $PWD:$PWD -w $PWD $SITE_BDII_CONTAINER ansible-playbook -c local -i inventories/$INVENTORY -e "emi_service=BDII_site yaim_options='-n BDII_site'" site-bdiis.yml
+  - docker run -h localhost.dev -v $PWD:$PWD -w $PWD $BOOTSTRAP_CONTAINER ansible-playbook -c local -i inventories/$INVENTORY cvmfs.yml -e slack_token=T02BJKQR4/B03ACH9CV/aSrsbdte1kY4B7taogRVxkWf
+notifications:
+  email: false
+  slack:
+    rooms:
+      - africa-arabia-roc:8bySc6HbbEvvxPYqg0Z56Xdk#code

@@ -1,0 +1,3 @@
+---
+# tasks file for emi-worker-node
+- include: install.yml

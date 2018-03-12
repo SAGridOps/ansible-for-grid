@@ -1,0 +1,9 @@
+---
+- name: Install worker-node base packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ base_dependencies}}"
+  tags:
+    - worker-nodes
+    - install

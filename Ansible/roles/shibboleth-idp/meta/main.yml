@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Marco Fargetta and Bruce Becker
+  description: A role to deploy a shibboleth identity provider
+  company:
+  license: Apache-2.0
+  min_ansible_version: 1.9
+  platforms:
+  dependencies:
+  - { role: fmarco76.firewall, ports: [{ port: 443, dport: 8443 }], table: nat, chain: PREROUTING }
+  - { role: fmarco76.firewall, ports: [443, 8443], source_host_net: 0.0.0.0/0}
+  
